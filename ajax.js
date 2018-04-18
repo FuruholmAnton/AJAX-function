@@ -19,6 +19,12 @@
  */
 export default function ajax(options) {
     return new Promise((resolve, reject) => {
+        if (typeof options == 'string') {
+            options = {
+                url: options,
+            };
+        }
+
         if (!options.method) options.method = 'post';
 
         /**
