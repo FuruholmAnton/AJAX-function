@@ -6,7 +6,7 @@
  * https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch
  *
  * ex.
- * utils.js.ajax({
+ * ajax({
  *  method: 'POST',
  *  body: {
  *   acton: 'subscribe',
