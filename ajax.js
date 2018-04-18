@@ -30,6 +30,9 @@ export default function ajax(options) {
                 'Content-type': 'application/x-www-form-urlencoded; charset=UTF-8',
             };
         }
+        if (!options.headers['Access-Control-Allow-Origin']) {
+            options.headers['Access-Control-Allow-Origin'] = '*';
+        }
 
         /* Needed for cookies to be set */
         if (!options.credentials) {
