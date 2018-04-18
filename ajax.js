@@ -45,9 +45,9 @@ export default function ajax(options) {
 
             if (options.url.startsWith(window.origin) ) {
                 options.credentials = 'same-origin';
-            } else {
+            } /* else {
                 options.credentials = 'include';
-            }
+            } */
         }
 
         /* Set url to BIA.AJAX_URL as default */

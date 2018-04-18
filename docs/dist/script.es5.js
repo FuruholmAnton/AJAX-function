@@ -8,7 +8,7 @@
  * https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch
  *
  * ex.
- * utils.js.ajax({
+ * ajax({
  *  method: 'POST',
  *  body: {
  *   acton: 'subscribe',
@@ -21,6 +21,12 @@
  */
 function ajax(options) {
     return new Promise((resolve, reject) => {
+        if (typeof options == 'string') {
+            options = {
+                url: options,
+            };
+        }
+
         if (!options.method) options.method = 'post';
 
         /**
@@ -32,15 +38,18 @@ function ajax(options) {
                 'Content-type': 'application/x-www-form-urlencoded; charset=UTF-8',
             };
         }
+        if (!options.headers['Access-Control-Allow-Origin']) {
+            options.headers['Access-Control-Allow-Origin'] = '*';
+        }
 
         /* Needed for cookies to be set */
         if (!options.credentials) {
 
             if (options.url.startsWith(window.origin) ) {
                 options.credentials = 'same-origin';
-            } else {
+            } /* else {
                 options.credentials = 'include';
-            }
+            } */
         }
 
         /* Set url to BIA.AJAX_URL as default */
@@ -151,6 +160,7 @@ function deepSerialize(data, prefix = '') {
 
 ajax({
     url: 'https://www.cats.org.uk/uploads/images/featurebox_sidebar_kids/grief-and-loss.jpg',
+    method: 'get',
     body: {
         test: true,
     }
