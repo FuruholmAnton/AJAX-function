@@ -1,5 +1,3 @@
-'use strict';
-
 /**
  * AJAX call
  * Works as the normal fetch(),
