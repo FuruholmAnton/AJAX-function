@@ -11,7 +11,7 @@
   "license": "MIT",
   "scripts": {
     "dev": "rollup ./docs/script.js --o ./docs/dist/script.es5.js --f cjs --watch",
-    "develop": "rollup -c --environment SERVE:dev",
+    "serve": "rollup -c --environment SERVE:dev --watch",
     "build": "rollup -c --environment BUILD:es5",
     "build:cjs": "rollup -c --environment BUILD:cjs",
     "build:es": "rollup -c --environment BUILD:es",

@@ -16,7 +16,24 @@ if (process.env.SERVE == 'dev') {
             format: 'es',
         },
         plugins: [
-            serve('docs'),
+            serve({
+                // Launch in browser (default: false)
+                open: true,
+                // Multiple folders to serve from
+                contentBase: ['docs'],
+
+                // Set to true to return index.html instead of 404
+                historyApiFallback: true,
+
+                 // Options used in setting up server
+                host: 'localhost',
+                port: 10001,
+
+                //set headers
+                headers: {
+                    'Access-Control-Allow-Origin': '*',
+                }
+            }),
         ]
     }
 } else {
