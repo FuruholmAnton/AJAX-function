@@ -88,10 +88,12 @@ export default function ajax(options) {
             }
         }
 
+        const theRequest = new Request(url, options);
+
         /**
          * The AJAX request, using es6 fetch.
          */
-        fetch(url, options).then((response) => {
+        fetch(theRequest).then((response) => {
             const contentType = response.headers.get('content-type');
 
             /* Function to make the code look cleaner */
