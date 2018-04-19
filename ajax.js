@@ -19,6 +19,12 @@
  */
 export default function ajax(options) {
     return new Promise((resolve, reject) => {
+        if (typeof options == 'string') {
+            options = {
+                url: options,
+            };
+        }
+
         if (!options.method) options.method = 'post';
 
         /**
@@ -30,15 +36,18 @@ export default function ajax(options) {
                 'Content-type': 'application/x-www-form-urlencoded; charset=UTF-8',
             };
         }
+        if (!options.headers['Access-Control-Allow-Origin']) {
+            options.headers['Access-Control-Allow-Origin'] = '*';
+        }
 
         /* Needed for cookies to be set */
         if (!options.credentials) {
 
             if (options.url.startsWith(window.origin) ) {
                 options.credentials = 'same-origin';
-            } else {
+            } /* else {
                 options.credentials = 'include';
-            }
+            } */
         }
 
         /* Set url to BIA.AJAX_URL as default */
@@ -79,10 +88,12 @@ export default function ajax(options) {
             }
         }
 
+        const theRequest = new Request(url, options);
+
         /**
          * The AJAX request, using es6 fetch.
          */
-        fetch(url, options).then((response) => {
+        fetch(theRequest).then((response) => {
             const contentType = response.headers.get('content-type');
 
             /* Function to make the code look cleaner */

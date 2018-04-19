@@ -1,5 +1,3 @@
-'use strict';
-
 /**
  * AJAX call
  * Works as the normal fetch(),
@@ -8,7 +6,7 @@
  * https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch
  *
  * ex.
- * utils.js.ajax({
+ * ajax({
  *  method: 'POST',
  *  body: {
  *   acton: 'subscribe',
@@ -21,6 +19,12 @@
  */
 function ajax(options) {
     return new Promise((resolve, reject) => {
+        if (typeof options == 'string') {
+            options = {
+                url: options,
+            };
+        }
+
         if (!options.method) options.method = 'post';
 
         /**
@@ -32,15 +36,18 @@ function ajax(options) {
                 'Content-type': 'application/x-www-form-urlencoded; charset=UTF-8',
             };
         }
+        if (!options.headers['Access-Control-Allow-Origin']) {
+            options.headers['Access-Control-Allow-Origin'] = '*';
+        }
 
         /* Needed for cookies to be set */
         if (!options.credentials) {
 
             if (options.url.startsWith(window.origin) ) {
                 options.credentials = 'same-origin';
-            } else {
+            } /* else {
                 options.credentials = 'include';
-            }
+            } */
         }
 
         /* Set url to BIA.AJAX_URL as default */
@@ -81,10 +88,12 @@ function ajax(options) {
             }
         }
 
+        const theRequest = new Request(url, options);
+
         /**
          * The AJAX request, using es6 fetch.
          */
-        fetch(url, options).then((response) => {
+        fetch(theRequest).then((response) => {
             const contentType = response.headers.get('content-type');
 
             /* Function to make the code look cleaner */
@@ -150,11 +159,14 @@ function deepSerialize(data, prefix = '') {
 }
 
 ajax({
-    url: 'https://www.cats.org.uk/uploads/images/featurebox_sidebar_kids/grief-and-loss.jpg',
+    // url: 'https://images.unsplash.com/photo-1511044568932-338cba0ad803?ixlib=rb-0.3.5&s=fb5abb6d37e3ffef86e8829294ad6d4c&auto=format&fit=crop&w=2250&q=80',
+    url: 'index.html',
+    method: 'get',
     body: {
         test: true,
     }
 }).then((output) => {
-    console.log(output);
-    
+    const url = URL.createObjectURL(output);
+    console.log(output, url);
+    document.getElementById('image').src = url;
 });
