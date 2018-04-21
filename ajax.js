@@ -25,7 +25,7 @@ export default function ajax(options) {
             };
         }
 
-        if (!options.method) options.method = 'post';
+        if (!options.method) options.method = 'get';
 
         /**
          * Set default headers if none where set.
