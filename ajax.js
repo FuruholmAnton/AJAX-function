@@ -50,7 +50,7 @@ export default function ajax(options) {
             } */
         }
 
-        /* Set url to BIA.AJAX_URL as default */
+        /* Set url to current page as default */
         let url = options.url || window.location.href;
 
         if (options.body) {
